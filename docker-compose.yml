@@ -1,0 +1,116 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    restart: always
+    env_file:
+      - ./conf/rabbitmq.env
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ./rabbitmq/etc/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - rabbitvar:/var/lib/rabbitmq
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+
+  elastic:
+    image: elasticsearch:7.17.13
+    restart: always
+    environment: 
+      discovery.type: single-node
+    ports:
+      - 9200:9200
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+  caddy:
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./html:/var/www/html
+      - ./.caddy_data:/data
+      - ./.caddy_config:/config
+      - ./conf/basic_auth.conf:/etc/basic_auth.conf
+      - ./caddy/etc/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/etc/tls_auto:/etc/tls_auto
+      - ./caddy/etc/tls_custom:/etc/tls_custom
+      - ./caddy/etc/tls_cloudflare:/etc/tls_cloudflare
+      - ./caddy/etc/tls_selfsigned:/etc/tls_selfsigned
+      - ./player:/player
+      - ./mail-acme-challenge:/mail-acme-challenge
+    environment:
+      - ACME_AGREE=true
+    ports:
+      - "2015:2015"
+      - "80:80"
+      - "443:443"
+    env_file:
+      - ./conf/caddy.env
+      - ./conf/caddy_sensitive.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+  wp-fpm:
+    image: wordpress:6-fpm
+    restart: always
+    links:
+      - db
+      - rabbitmq
+      - redis
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    volumes:
+      - html:/var/www/html
+    env_file:
+      - ./conf/global.env
+      - ./conf/wordpress.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+  db:
+    image: mariadb:11-jammy
+    restart: always
+    volumes:
+      - dbdata:/var/lib/mysql
+    env_file:
+      - ./conf/db.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1M"
+        max-file: "10"
+
+volumes:
+  html:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/html 
+      o: bind
+  dbdata:
+  rabbitvar:
+  elastic:
+    driver: local

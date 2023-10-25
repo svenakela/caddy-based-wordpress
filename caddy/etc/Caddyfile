@@ -1,0 +1,23 @@
+{
+    default_sni {$SERVER_NAME}
+}
+
+{$SERVER_NAME} {    
+    import /etc/{$TLS_MODE} 
+    import /etc/basic_auth.conf
+    root * /var/www/html
+    encode zstd gzip
+
+    php_fastcgi wp-fpm:9000
+    file_server
+
+    log {
+        output file /var/log/caddy.log
+    }
+
+    header /media X-Frame-Options "SAMEORIGIN"
+    header /static X-Frame-Options "SAMEORIGIN"
+    header / X-Content-Type-Options "nosniff"
+
+}
+

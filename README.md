@@ -174,3 +174,11 @@ This file has PHP specific settings and are injected into the `wp-fpm` node. If 
 
 ### conf/wordpres.env ###
 Wordpress specific settings. DB-connection credentials here should match the credentials in `db.env`.
+
+## Backups
+
+Backup the `html` directory for file backup.
+
+Run the `db_backup.sh` script. The script makes a proper innodb backup and stores the file in the `backups` directory.
+
+Note: the `db_restore.sh` is to be rewritten with innodb backups. If you need to run a restore, [do it manually](https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/).

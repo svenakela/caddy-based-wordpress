@@ -9,6 +9,20 @@
     root * /var/www/html
     encode zstd gzip
 
+    @elastic {
+        method POST
+        path /es-search/*/_search
+    }
+    handle @elastic {
+        uri strip_prefix /es-search
+        reverse_proxy http://elastic:9200 {
+            @notforyou status 401 404 405 406 500 501 502
+            handle_response @notforyou {
+                respond \{\}
+            }
+        }
+    }
+
     php_fastcgi wp-fpm:9000
     file_server
 
@@ -21,4 +35,3 @@
     header / X-Content-Type-Options "nosniff"
 
 }
-

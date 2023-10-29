@@ -1,22 +1,5 @@
 version: "3.9"
 services:
-  rabbitmq:
-    image: rabbitmq:3.8-management
-    restart: always
-    env_file:
-      - ./conf/rabbitmq.env
-    ports:
-      - 15672:15672
-      - 5672:5672
-    volumes:
-      - ./rabbitmq/etc/enabled_plugins:/etc/rabbitmq/enabled_plugins
-      - rabbitvar:/var/lib/rabbitmq
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "1M"
-        max-file: "10"
-
   redis:
     image: redis:7-alpine
     restart: always
@@ -74,11 +57,9 @@ services:
     restart: always
     links:
       - db
-      - rabbitmq
       - redis
     depends_on:
       - db
-      - rabbitmq
       - redis
     volumes:
       - html:/var/www/html
@@ -112,6 +93,5 @@ volumes:
       device: $PWD/html 
       o: bind
   dbdata:
-  rabbitvar:
   elastic:
     driver: local

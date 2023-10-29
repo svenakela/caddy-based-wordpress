@@ -11,8 +11,5 @@ GZ="backups/backup-$1.sql.tar.gz"
 
 if [ -f $GZ ]
 then
-  SQL="`tar xvzf $GZ`"
-  echo Restoring DB from $SQL...
-  cat $SQL | docker exec -i `docker-compose ps -q db` /usr/bin/mysql --user=root --password=$MYSQL_ROOT_PASSWORD $MYSQL_DATABASE
-  rm $SQL
+ echo Restoring with mariadb-backup is not scripted yet. Do it manually!
 fi

@@ -5,6 +5,7 @@
 {$SERVER_NAME} {    
     import /etc/{$TLS_MODE} 
     import /etc/basic_auth.conf
+    import /etc/caddyfile_optional.conf
     root * /var/www/html
     encode zstd gzip
 

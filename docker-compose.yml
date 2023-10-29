@@ -46,6 +46,7 @@ services:
       - ./.caddy_data:/data
       - ./.caddy_config:/config
       - ./conf/basic_auth.conf:/etc/basic_auth.conf
+      - ./conf/caddyfile_optional.conf:/etc/caddyfile_optional.conf
       - ./caddy/etc/Caddyfile:/etc/caddy/Caddyfile
       - ./caddy/etc/tls_auto:/etc/tls_auto
       - ./caddy/etc/tls_custom:/etc/tls_custom

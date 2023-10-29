@@ -112,9 +112,9 @@ We are going to use the open source [Elasticpress plugin](https://wordpress.org/
  - When asked what to index, you choose! This is _my_ list_
    - [x] Post Search
    - [x] Autosuggest
-   - [_] Did You Mean
+   - [] Did You Mean
    - [x] WooCommerce
-   - [_] Protected Content
+   - [] Protected Content
  - Save Features
  - Index Your Content
 

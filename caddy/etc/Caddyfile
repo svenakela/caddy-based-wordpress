@@ -4,24 +4,8 @@
 
 {$SERVER_NAME} {    
     import /etc/{$TLS_MODE} 
-    import /etc/basic_auth.conf
-    import /etc/caddyfile_optional.conf
     root * /var/www/html
     encode zstd gzip
-
-    @elastic {
-        method POST
-        path /es-search/*/_search
-    }
-    handle @elastic {
-        uri strip_prefix /es-search
-        reverse_proxy http://elastic:9200 {
-            @notforyou status 401 404 405 406 500 501 502
-            handle_response @notforyou {
-                respond \{\}
-            }
-        }
-    }
 
     @forbidden {
         not path /wp-includes/ms-files.php

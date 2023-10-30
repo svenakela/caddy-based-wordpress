@@ -13,6 +13,8 @@ This is a complete Docker Compose setup that needs minimal effort from you to ge
 
 This is what you get if you do all the config in this README. Don't worry! Most is already in place and the wall-of-text below is mostly to document how the setup works.
 
+Are you looking for a simple setup without all the extra candy? [Have a look at the Caddy Community Example Here](https://github.com/svenakela/caddy-based-wordpress/tree/caddy-community-wiki-example)!
+
 ![Docker Containers Diagram](diagram.png)
 
 Is this installation working? Sure is! This is running live hosting websites already.

@@ -41,8 +41,9 @@
         output file /var/log/caddy.log
     }
 
-    header /media X-Frame-Options "SAMEORIGIN"
-    header /static X-Frame-Options "SAMEORIGIN"
-    header / X-Content-Type-Options "nosniff"
+    header / {
+      X-Frame-Options "SAMEORIGIN"
+      X-Content-Type-Options "nosniff"
+    }
 
 }

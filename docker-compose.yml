@@ -35,14 +35,11 @@ services:
       - ./caddy/etc/tls_custom:/etc/tls_custom
       - ./caddy/etc/tls_cloudflare:/etc/tls_cloudflare
       - ./caddy/etc/tls_selfsigned:/etc/tls_selfsigned
-      - ./player:/player
       - ./mail-acme-challenge:/mail-acme-challenge
-    environment:
-      - ACME_AGREE=true
     ports:
-      - "2015:2015"
       - "80:80"
       - "443:443"
+      - "443:443/udp"
     env_file:
       - ./conf/caddy.env
       - ./conf/caddy_sensitive.env

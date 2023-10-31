@@ -10,12 +10,10 @@ services:
       - ./caddy/etc/Caddyfile:/etc/caddy/Caddyfile
       - ./caddy/etc/tls_auto:/etc/tls_auto
       - ./caddy/etc/tls_selfsigned:/etc/tls_selfsigned
-    environment:
-      - ACME_AGREE=true
     ports:
-      - "2015:2015"
       - "80:80"
       - "443:443"
+      - "443:443/udp"
     env_file:
       - ./conf/caddy.env
     logging:

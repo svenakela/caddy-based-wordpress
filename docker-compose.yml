@@ -60,8 +60,8 @@ services:
       - redis
     volumes:
       - html:/var/www/html
+      - ./conf/optional_php.ini:/usr/local/etc/php/conf.d/optional_php.ini
     env_file:
-      - ./conf/global.env
       - ./conf/wordpress.env
     logging:
       driver: "json-file"

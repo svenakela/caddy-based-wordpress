@@ -60,7 +60,7 @@ services:
       - redis
     volumes:
       - html:/var/www/html
-      - ./conf/optional_php.ini:/usr/local/etc/php/conf.d/optional_php.ini
+      - ./conf/php_optional.ini:/usr/local/etc/php/conf.d/php_optional.ini
     env_file:
       - ./conf/wordpress.env
     logging:

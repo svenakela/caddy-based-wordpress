@@ -171,11 +171,11 @@ In the file there is an example how to configure your server to redirect and get
 ### conf/db.env ###
 Set GOOD user names and passwords in `db.env`. Long and ugly! These settings are used to automatically create the database when then Maria DB container startup for the first time.
 
+### conf/php_optional.ini ###
+This file has PHP specific settings and are injected into the `wp-fpm` node as a volume. Change or add settings in here and restart the container to reload. If you for example install the firewall plugin [Wordfence](https://sv.wordpress.org/plugins/wordfence/) you need to add ini settings to the fpm container. Then this file is what you are looking for.
+
 ### conf/wordpress.env ###
 Wordpress specific settings. DB-connection credentials here should match the credentials in `db.env`.
-
-### conf/optional_php.ini ###
-This file has PHP specific settings and are injected into the `wp-fpm` node as a volume. Change or add settings in here and restart the container to reload. If you for example install the firewall plugin [Wordfence](https://sv.wordpress.org/plugins/wordfence/) you need to add ini settings to the fpm container. Then this file is what you are looking for.
 
 ## Backups
 
